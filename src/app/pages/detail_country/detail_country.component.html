@@ -1,0 +1,78 @@
+<div *ngIf="country | async; let country" class="country">
+  <button class="button shadow" [routerLink]="'/'">
+    <span class="fa fa-arrow-left"></span>
+    Back
+  </button>
+  <div class="country_layout">
+    <img [src]="country.flag" />
+    <div class="country_detail">
+      <h3>{{ country.name }}</h3>
+
+      <div class="country_info">
+        <div class="country_section">
+          <p>
+            <strong>Native Name:</strong>
+            {{ country.nativeName }}
+          </p>
+          <p>
+            <strong>Population:</strong>
+            {{ country.population | number: '1.0' }}
+          </p>
+          <p>
+            <strong>Region:</strong>
+            {{ country.region }}
+          </p>
+          <p>
+            <strong>Sub Region:</strong>
+            {{ country.subregion }}
+          </p>
+          <p>
+            <strong>Capital:</strong>
+            {{ country.capital }}
+          </p>
+        </div>
+
+        <div class="country_section">
+          <p>
+            <strong>Top Level Domain:</strong>
+            {{ country.topLevelDomain }}
+          </p>
+          <p>
+            <strong>Currencies:</strong>
+            {{ displayCurrencies(country.currencies) }}
+          </p>
+          <p>
+            <strong>Languages:</strong>
+            {{ displayLanguages(country.languages) }}
+          </p>
+        </div>
+      </div>
+
+      <div class="border_countries">
+        <p>
+          <strong>Border Countries</strong>
+        </p>
+        <ng-container
+          *ngIf="borderCountries | async as borderCountries; else empty"
+          class="border_countries_buttons"
+        >
+          <div
+            *ngIf="borderCountries.length > 0; else empty"
+            class="border_countries_buttons"
+          >
+            <div
+              *ngFor="let borderCountry of borderCountries"
+              class="button shadow"
+              [routerLink]="'/' + borderCountry.name"
+            >
+              {{ borderCountry.name }}
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #empty>
+          <p>This country has no border countries</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
